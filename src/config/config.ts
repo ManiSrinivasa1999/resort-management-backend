@@ -1,19 +1,19 @@
-import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm";
-import dotenv from "dotenv";
+import { SSMClient, GetParameterCommand } from "@aws-sdk/client-ssm"
+import dotenv from "dotenv"
 
-dotenv.config(); // Load from .env file
+dotenv.config() // Load from .env file
 
-const ssm = new SSMClient({ region: "ap-south-1" });
+const ssm = new SSMClient({ region: "ap-south-1" })
 
 async function getSSMParameter(name: string): Promise<string> {
   try {
-    const command = new GetParameterCommand({ Name: name, WithDecryption: true });
-    const response = await ssm.send(command);
-    if (!response.Parameter?.Value) throw new Error(`Missing value for ${name}`);
-    return response.Parameter.Value;
+    const command = new GetParameterCommand({ Name: name, WithDecryption: true })
+    const response = await ssm.send(command)
+    if (!response.Parameter?.Value) throw new Error(`Missing value for ${name}`)
+    return response.Parameter.Value
   } catch (error) {
-    console.error(`Error fetching ${name}:`, error);
-    throw error;
+    console.error(`Error fetching ${name}:`, error)
+    throw error
   }
 }
 
@@ -28,5 +28,5 @@ export async function loadConfig() {
     USER_POOL_ID: process.env.USER_POOL_ID || (await getSSMParameter("/app/USER_POOL_ID")),
     CLIENT_ID: process.env.CLIENT_ID || (await getSSMParameter("/app/CLIENT_ID")),
     CLIENT_SECRET: process.env.CLIENT_SECRET || (await getSSMParameter("/app/CLIENT_SECRET")),
-  };
+  }
 }
