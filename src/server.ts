@@ -3,6 +3,7 @@ import cors from "cors";
 import helmet from "helmet";
 import { loadConfig } from "./config/config";
 import { getPrismaClient } from "./config/prismaConfig";
+import authRoutes from "./routes/authRoutes";
 
 
 const app = express();
@@ -11,6 +12,8 @@ const app = express();
 app.use(cors());
 app.use(helmet());
 app.use(express.json());
+
+app.use("/auth", authRoutes);
 
 const startServer = async () => {
   const config = await loadConfig();

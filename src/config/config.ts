@@ -25,5 +25,8 @@ export async function loadConfig() {
     DB_PASSWORD: process.env.DB_PASSWORD || (await getSSMParameter("/app/DB_PASSWORD")),
     DB_NAME: process.env.DB_NAME || (await getSSMParameter("/app/DB_NAME")),
     DB_PORT: process.env.DB_PORT || (await getSSMParameter("/app/DB_PORT")),
+    USER_POOL_ID: process.env.USER_POOL_ID || (await getSSMParameter("/app/USER_POOL_ID")),
+    CLIENT_ID: process.env.CLIENT_ID || (await getSSMParameter("/app/CLIENT_ID")),
+    CLIENT_SECRET: process.env.CLIENT_SECRET || (await getSSMParameter("/app/CLIENT_SECRET")),
   };
 }
